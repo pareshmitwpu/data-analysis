@@ -1,0 +1,37 @@
+import numpy as np
+import pandas as pd
+import matplotlib.pyplot as plt
+import seaborn as sns
+from datetime import datetime
+import logging
+
+# Set up logging
+logging.basicConfig(filename='analysis.log', level=logging.INFO)
+logging.info(f"Script started at {datetime.now()}")
+
+# Generate random data
+np.random.seed(42)
+data = np.random.normal(loc=50, scale=15, size=100)
+
+# Create DataFrame
+df = pd.DataFrame(data, columns=['Score'])
+
+# Basic statistics
+mean_score = df['Score'].mean()
+std_dev = df['Score'].std()
+logging.info(f"Mean: {mean_score}, Standard Deviation: {std_dev}")
+
+# Visualize using Seaborn and Matplotlib
+sns.set(style="whitegrid")
+plt.figure(figsize=(8, 5))
+sns.histplot(df['Score'], bins=15, kde=True, color='skyblue')
+plt.title("Distribution of Scores")
+plt.xlabel("Score")
+plt.ylabel("Frequency")
+plt.axvline(mean_score, color='red', linestyle='--', label=f'Mean: {mean_score:.2f}')
+plt.legend()
+plt.tight_layout()
+plt.savefig("score_distribution.png")
+plt.show()
+
+logging.info("Script completed and plot saved.")
